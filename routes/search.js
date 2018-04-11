@@ -39,6 +39,7 @@ router.get('/', function (req, res, next) {
         if (!err && response.statusCode == 200) {
             var para = JSON.parse(body);
             if (para.error) {
+                Logger.error(para, __filename);
                 res.render('index');
             } else {
                 var paging = Paging.paging(body.searchInformation.totalResults, config.num, currentPageIndex);
@@ -48,7 +49,7 @@ router.get('/', function (req, res, next) {
                 res.render('search', {title: uncrypt + ' - Google 搜索', cursor: para});
             }
         } else {
-            Logger.debug(err, __filename);
+            Logger.error(err, __filename);
             res.render('index', {title: 'Google'});
         }
     });
