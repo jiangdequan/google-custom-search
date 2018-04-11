@@ -42,11 +42,11 @@ router.get('/', function (req, res, next) {
                 Logger.error(para, __filename);
                 res.render('index');
             } else {
-                var paging = Paging.paging(body.searchInformation.totalResults, config.num, currentPageIndex);
-                var para = body;
-                para.paging = paging;
-                para.q = req.query.id;
-                res.render('search', {title: uncrypt + ' - Google 搜索', cursor: para});
+                var paging = Paging.paging(para.searchInformation.totalResults, config.num, currentPageIndex);
+                var result = para;
+                result.paging = paging;
+                result.q = req.query.id;
+                res.render('search', {title: uncrypt + ' - Google 搜索', cursor: result});
             }
         } else {
             Logger.error(err, __filename);
