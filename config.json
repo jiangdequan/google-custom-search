@@ -1,0 +1,9 @@
+{
+    "google_custom_search_api": "https://www.googleapis.com/customsearch/v1",
+    "start": 0,
+    "num": 10,
+    "client": "google-csbe",
+    "key": "",
+    "cx": "",
+    "private_key": ""
+}

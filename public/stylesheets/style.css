@@ -1,0 +1,248 @@
+#logo {
+    padding-top: 190px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+#search-input {
+    padding-top: 30px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+#search-input input {
+    font: 16px arial, sans-serif;
+    background: #fff;
+    border: 1px solid #cfcfcf;
+    /*color: #999;*/
+    height: 34px;
+    line-height: 34px !important;
+    outline: none;
+    padding: 3px;
+    border-radius: 3px;
+    width: 530px;
+    -webkit-box-shadow: 0 0 10px #ccc;
+}
+
+#search-buttons {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+    text-align: center;
+}
+
+#search-buttons input {
+    background-color: #f2f2f2;
+    border: 1px solid #f2f2f2;
+    height: 36px;
+    line-height: 27px;
+    border-radius: 2px;
+    font-weight: bold;
+    color: #757575;
+    cursor: default;
+    font-family: arial, sans-serif;
+    font-size: 13px;
+    font-weight: bold;
+    margin: 11px 4px;
+    min-width: 54px;
+    padding: 0 16px;
+    text-align: center;
+    outline: none;
+}
+
+#search-buttons input:hover {
+    border: 1px solid #bdbdbd;
+    color: #222222;
+}
+
+#search-buttons input:focus {
+    border: 1px solid #709fbe;
+}
+
+#search-bar {
+    padding-top: -10px;
+    padding-left: 10px;
+    background-color: #f5f5f5;
+    border-bottom: 1px solid #ebebeb;
+    height: 90px;
+    width: 100%;
+    line-height: 90px;
+    display: inline-block;
+    overflow: hidden;
+}
+
+#search-bar a {
+    height: 34px;
+    line-height: 34px;
+}
+
+#search-bar input {
+    font: 16px arial, sans-serif;
+    background: #fff;
+    border: 1px solid #cfcfcf;
+    /*color: #999;*/
+    height: 34px;
+    line-height: 34px !important;
+    outline: none;
+    padding: 3px;
+    border-radius: 3px;
+    width: 530px;
+    -webkit-box-shadow: 0 0 10px #ccc;
+}
+
+#result-info {
+    height: 43px;
+    color: #808080;
+    line-height: 43px;
+    padding: 0;
+    font-size: 13px;
+}
+
+#content {
+    margin-left: 8em;
+    width: 600px;
+}
+
+#result-info {
+    height: 43px;
+    color: #808080;
+    line-height: 43px;
+    padding: 0;
+}
+
+#content .content-item {
+    margin-bottom: 23px;
+    margin-top: 0;
+}
+
+#content .content-item h3 {
+    display: block;
+    font-size: 16px;
+    margin: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: #1A0DAB;
+    font-weight: bold;
+    line-height: 1.6;
+}
+
+#content .content-item h3 a {
+    text-decoration: none;
+}
+
+#content .content-item h3 a:hover {
+    text-decoration: underline;
+}
+
+#content .content-item b {
+    color: #DD4B39;
+    font-style: normal;
+    font-weight: normal;
+}
+
+#content .content-item .content-item-link {
+    color: #006621;
+    font-style: normal;
+    height: 18px;
+    line-height: 16px;
+    font-size: 14px;
+}
+
+#content .content-item-desc {
+    line-height: 1.4;
+    word-wrap: break-word;
+    color: #545454;
+    font-size: small;
+}
+
+#nav {
+    text-align: center;
+    font-size: 12px;
+}
+
+#nav a:hover {
+    text-decoration: underline;
+}
+
+#nav ul {
+    list-style-type: none;
+    /*border-top: 1px solid #ddd;*/
+}
+
+#nav ul li {
+    display: block;
+    float: left;
+    width: 18px;
+    padding: 0.08em;
+    white-space: nowrap;
+    color: #1a0dab;
+    text-decoration: none;
+    margin: 1em 0;
+    cursor: pointer;
+    text-align: center;
+}
+
+#nav ul li a {
+    white-space: nowrap;
+    color: #1a0dab;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+#nav ul li.nav-prev-disable {
+    width: 40px;
+}
+
+#nav ul li.nav-prev-enable {
+    width: 52px;
+}
+
+#nav ul li.nav-next-disable {
+    width: 60px;
+}
+
+#nav ul li.nav-next-enable {
+    width: 71px;
+}
+
+#nav ul li.nav-prev-enable .nav-item-img {
+    background-position: 0 0;
+    width: 52px;
+}
+
+#nav ul li.nav-prev-disable .nav-item-img {
+    background-position: -12px 0;
+    width: 40px;
+}
+
+#nav ul li.nav-next-enable .nav-item-img {
+    background-position: -96px 0;
+    width: 71px;
+}
+
+#nav ul li.nav-next-disable .nav-item-img {
+    background-position: -94px 0;
+    width: 60px;
+}
+
+#nav ul li .nav-item-img {
+    background: url('/images/nav_logo242.webp') no-repeat -74px 0;
+    width: 20px;
+    height: 40px;
+}
+
+#nav ul .active .nav-item-img {
+    background-position: -53px 0;
+}
+
+#nav ul .active {
+    cursor: default;
+    color: black;
+}
+
+#nav ul a div {
+    color: #4285f4;
+}

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title><%= title %></title>
+    <link href="/images/favicon.ico" rel="shortcut icon">
+    <script src="/javascripts/jquery-3.3.1.min.js"></script>
+    <link rel='stylesheet' href='/stylesheets/style.css'/>
+</head>
+<body style="width: 100%;margin: 0 !important;overflow-x: hidden;min-width: 700px !important;">
+<div id="search-bar">
+    <div style="float: left;height: 44px;margin-top: 20px;margin-bottom: 20px;">
+        <a href="/">
+            <img src="/images/googlelogo_color_120x44dp.png" width="120" height="44">
+        </a>
+    </div>
+    <div style="float: left;padding-left: 12px;">
+        <input type="text" id="search-text" autofocus>
+    </div>
+</div>
+<div id="content">
+    <div id="result-info">找到约 <%- cursor.searchInformation.formattedTotalResults %> 条结果
+        (用时<%- cursor.searchInformation.formattedSearchTime %>秒)
+    </div>
+
+    <% for (var i = 0, l = cursor.items.length; i < l; i++) { %>
+    <div class="content-item">
+        <h3><a href="<%- cursor.items[i].link %>" target="_blank"><%- cursor.items[i].title %></a></h3>
+        <div class="content-item-link">
+            <% if (cursor.items[i].formattedUrl.length > 80) {%>
+                <%- cursor.items[i].formattedUrl.substring(0, 80) + '...' %>
+            <% } else { %>
+                <%- cursor.items[i].formattedUrl %>
+            <% } %>
+        </div>
+        <div class="content-item-desc">
+            <%- cursor.items[i].htmlSnippet %>
+        </div>
+    </div>
+    <% } %>
+
+    <% if (cursor.paging.showPagingBar) { %>
+        <div id="nav">
+            <ul>
+                <% if (cursor.paging.showPrevPage) { %>
+                    <li class="nav-prev-enable">
+                        <a href="/search?id=<%- encodeURIComponent(cursor.q) %>&start=<%- (cursor.paging.currentPageIndex - 2) * 10 + 1 %>">
+                            <div class="nav-item-img"></div>
+                            <div>上一页</div>
+                        </a>
+                    </li>
+                <% } else { %>
+                    <li class="nav-prev-disable">
+                        <div class="nav-item-img"></div>
+                    </li>
+                <% } %>
+
+                <% for (var i = 0, l = cursor.paging.pages.length; i < l; i++) { %>
+                    <% if (cursor.paging.pages[i].label == cursor.paging.currentPageIndex) { %>
+                        <li class="active">
+                            <div class="nav-item-img"></div>
+                            <div><%- cursor.paging.pages[i].label %></div>
+                        </li>
+                    <% } else { %>
+                        <li>
+                            <a href="/search?id=<%- encodeURIComponent(cursor.q) %>&start=<%- cursor.paging.pages[i].start %>">
+                                <div class="nav-item-img"></div>
+                                <div><%- cursor.paging.pages[i].label %></div>
+                            </a>
+                        </li>
+                    <% } %>
+                <% } %>
+
+                <% if (cursor.paging.showNextPage) { %>
+                    <li class="nav-next-enable">
+                        <a href="/search?id=<%- encodeURIComponent(cursor.q) %>&start=<%- cursor.paging.currentPageIndex * 10 + 1 %>">
+                            <div class="nav-item-img"></div>
+                            <div>下一页</div>
+                        </a>
+                    </li>
+                <% } else { %>
+                    <li class="nav-next-disable">
+                        <div class="nav-item-img"></div>
+                    </li>
+                <% } %>
+            </ul>
+        </div>
+    <% } %>
+
+</div>
+</body>
+</html>
