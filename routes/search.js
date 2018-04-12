@@ -52,7 +52,7 @@ router.get('/', function (req, res, next) {
                 var result = searchResult;
                 result.paging = paging;
                 result.q = req.query.id;
-                res.render('search', {title: uncrypt + ' - Google 搜索', cursor: result});
+                res.render('search', {title: uncrypt + ' - Google 搜索', result: result});
             }
         } else {
             Logger.error(err, __filename);
