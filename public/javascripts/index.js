@@ -10,7 +10,7 @@ $(function () {
     var crypt = new JSEncrypt();
     crypt.setPublicKey(public_key);
 
-    $('#btn-search').click(function () {
+    function request() {
         var keywords = $('#input-search-text').val();
 
         if (keywords === '' || keywords === undefined || keywords === null) {
@@ -19,5 +19,18 @@ $(function () {
 
         var encrypted = crypt.encrypt(keywords);
         window.location.href = '/search?id=' + encodeURIComponent(encrypted);
+    }
+    $('#btn-search').click(function () {
+        request();
+    });
+
+    $("#input-search-text").bind("keydown", function (e) {
+        var theEvent = e || window.event;
+        var code = theEvent.keyCode || theEvent.which || theEvent.charCode;
+        if (code == 13) {
+            // 回车执行查询
+            request();
+            return false;
+        }
     });
 });

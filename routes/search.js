@@ -14,6 +14,8 @@ var private_key = process.env['PRIVATE_KEY'] || FileUtils.loadFile(__dirname + '
 var decrypt = new JSEncrypt();
 decrypt.setPrivateKey(private_key);
 
+var fixedUrl = FileUtils.spliceFixUrl(config);
+
 /* GET users listing. */
 router.get('/', function (req, res, next) {
     var text = decodeURIComponent(req.query.id);
@@ -24,13 +26,13 @@ router.get('/', function (req, res, next) {
     var start = req.query.start;
     var currentPageIndex = 1;
     if (null === start || undefined === start || '' === undefined) {
-        start = 0;
+        start = 1;
     } else {
         currentPageIndex = Math.floor(start / config.num) + 1;
     }
     Logger.debug(currentPageIndex, __filename);
 
-    var url = FileUtils.spliceUrl(config, start) + uncrypt;
+    var url = fixedUrl + encodeURIComponent(uncrypt) + '&start=' + start;
     Logger.debug(url, __filename);
 
     // var body = FileUtils.loadFile(__dirname + '/../test/result.json');
@@ -51,10 +53,11 @@ router.get('/', function (req, res, next) {
                 var paging = Paging.paging(searchResult.searchInformation.totalResults, config.num, currentPageIndex);
                 var result = searchResult;
                 result.paging = paging;
-                result.q = req.query.id;
+                result.id = req.query.id;
                 res.render('search', {title: uncrypt + ' - Google 搜索', result: result});
             }
         } else {
+            Logger.error('error occured when invoke api!', __filename)
             Logger.error(err, __filename);
             res.render('index', {title: 'Google'});
         }
