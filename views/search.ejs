@@ -1,91 +1,140 @@
 <!DOCTYPE html>
 <html>
-<head>
+<head lang="en">
     <title><%= title %></title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
     <link href="/images/favicon.ico" rel="shortcut icon">
-    <script src="/javascripts/jquery-3.3.1.min.js"></script>
-    <link rel='stylesheet' href='/stylesheets/style.css'/>
+    <link rel='stylesheet' href='/stylesheets/bootstrap.min.css'/>
+
+    <script src="/javascripts/jquery-3.3.1.slim.min.js"></script>
+    <script src="/javascripts/popper.min.js"></script>
+    <script src="/javascripts/bootstrap.min.js"></script>
+    <script src="/javascripts/jsencrypt.min.js"></script>
+    <script src="/javascripts/search.js"></script>
+    <style>
+        .p-result-desc b {
+            color: red;
+            font-weight: normal;
+        }
+        .p-result-desc {
+            font-size: 14px;
+        }
+        .active a {
+            cursor: default;
+        }
+        .small-link {
+            color: green;
+        }
+        h6 {
+            margin-bottom: 0.05rem;
+            margin-top: 0.2rem;
+        }
+    </style>
 </head>
-<body style="width: 100%;margin: 0 !important;overflow-x: hidden;min-width: 700px !important;">
-<div id="search-bar">
-    <div style="float: left;height: 44px;margin-top: 20px;margin-bottom: 20px;">
-        <a href="/">
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="/">
             <img src="/images/googlelogo_color_120x44dp.png" width="120" height="44">
         </a>
-    </div>
-    <div style="float: left;padding-left: 12px;">
-        <input type="text" id="search-text" autofocus>
-    </div>
-</div>
-<div id="content">
-    <div id="result-info">找到约 <%- cursor.searchInformation.formattedTotalResults %> 条结果
-        (用时<%- cursor.searchInformation.formattedSearchTime %>秒)
-    </div>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-    <% for (var i = 0, l = cursor.items.length; i < l; i++) { %>
-    <div class="content-item">
-        <h3><a href="<%- cursor.items[i].link %>" target="_blank"><%- cursor.items[i].title %></a></h3>
-        <div class="content-item-link">
-            <% if (cursor.items[i].formattedUrl.length > 80) {%>
-                <%- cursor.items[i].formattedUrl.substring(0, 80) + '...' %>
-            <% } else { %>
-                <%- cursor.items[i].formattedUrl %>
-            <% } %>
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+            <form class="form-inline my-2 my-lg-0 input-group" style="max-width: 600px;">
+                <input type="text" class="form-control" id="input-search-text">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="button" id="btn-search">Go</button>
+                </div>
+            </form>
         </div>
-        <div class="content-item-desc">
-            <%- cursor.items[i].htmlSnippet %>
+    </nav>
+    <div class="container">
+        <p style="color: grey">
+            <small>
+                找到约 <%- result.searchInformation.formattedTotalResults %> 条结果
+                (用时<%- result.searchInformation.formattedSearchTime %>秒)
+            </small>
+        </p>
+        <% for (var i = 0, l = result.items.length; i < l; i++) { %>
+        <div class="row">
+            <div class="col-md-7">
+                <h6>
+                    <a href="<%- result.items[i].link %>" target="_blank">
+                        <%- result.items[i].title %>
+                    </a>
+                </h6>
+                <small class="small-link">
+                    <% if (result.items[i].formattedUrl.length > 80) {%>
+                        <%- result.items[i].formattedUrl.substring(0, 80) + '...' %>
+                    <% } else { %>
+                        <%- result.items[i].formattedUrl %>
+                    <% } %>
+                </small>
+                <p class="p-result-desc">
+                    <%- result.items[i].htmlSnippet %>
+                </p>
+            </div>
         </div>
-    </div>
-    <% } %>
+        <% } %>
 
-    <% if (cursor.paging.showPagingBar) { %>
-        <div id="nav">
-            <ul>
-                <% if (cursor.paging.showPrevPage) { %>
-                    <li class="nav-prev-enable">
-                        <a href="/search?id=<%- encodeURIComponent(cursor.q) %>&start=<%- (cursor.paging.currentPageIndex - 2) * 10 + 1 %>">
-                            <div class="nav-item-img"></div>
-                            <div>上一页</div>
-                        </a>
-                    </li>
-                <% } else { %>
-                    <li class="nav-prev-disable">
-                        <div class="nav-item-img"></div>
-                    </li>
-                <% } %>
-
-                <% for (var i = 0, l = cursor.paging.pages.length; i < l; i++) { %>
-                    <% if (cursor.paging.pages[i].label == cursor.paging.currentPageIndex) { %>
-                        <li class="active">
-                            <div class="nav-item-img"></div>
-                            <div><%- cursor.paging.pages[i].label %></div>
+        <% if (result.paging.showPagingBar) { %>
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                    <% if (result.paging.showPrevPage) { %>
+                        <li class="page-item">
+                            <a class="page-link" href="/search?id=<%- encodeURIComponent(result.id) %>&start=<%- (result.paging.currentPageIndex - 2) * 10 + 1 %>" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                                <span class="sr-only">Previous</span>
+                            </a>
                         </li>
                     <% } else { %>
-                        <li>
-                            <a href="/search?id=<%- encodeURIComponent(cursor.q) %>&start=<%- cursor.paging.pages[i].start %>">
-                                <div class="nav-item-img"></div>
-                                <div><%- cursor.paging.pages[i].label %></div>
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                                <span class="sr-only">Previous</span>
                             </a>
                         </li>
                     <% } %>
-                <% } %>
 
-                <% if (cursor.paging.showNextPage) { %>
-                    <li class="nav-next-enable">
-                        <a href="/search?id=<%- encodeURIComponent(cursor.q) %>&start=<%- cursor.paging.currentPageIndex * 10 + 1 %>">
-                            <div class="nav-item-img"></div>
-                            <div>下一页</div>
-                        </a>
-                    </li>
-                <% } else { %>
-                    <li class="nav-next-disable">
-                        <div class="nav-item-img"></div>
-                    </li>
-                <% } %>
-            </ul>
-        </div>
-    <% } %>
 
-</div>
+                    <% for (var i = 0, l = result.paging.pages.length; i < l; i++) { %>
+                        <% if (result.paging.pages[i].label == result.paging.currentPageIndex) { %>
+                            <li class="page-item active">
+                                <a class="page-link" href="#" onclick="return false">
+                                    <%- result.paging.pages[i].label %>
+                                </a>
+                            </li>
+                        <% } else { %>
+                            <li class="page-item">
+                                <a class="page-link" href="/search?id=<%- encodeURIComponent(result.id) %>&start=<%- result.paging.pages[i].start %>">
+                                    <%- result.paging.pages[i].label %>
+                                </a>
+                            </li>
+                        <% } %>
+                    <% } %>
+
+                    <% if (result.paging.showNextPage) { %>
+                        <li class="page-item">
+                            <a class="page-link" href="/search?id=<%- encodeURIComponent(result.id) %>&start=<%- result.paging.currentPageIndex * 10 + 1 %>" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                        </li>
+                    <% } else { %>
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                        </li>
+                    <% } %>
+                </ul>
+            </nav>
+        <% } %>
+    </div>
 </body>
 </html>

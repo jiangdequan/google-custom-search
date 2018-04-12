@@ -1,25 +1,61 @@
 <!DOCTYPE html>
 <html>
-<head>
+<head lang="en">
     <title><%= title %></title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
     <link href="/images/favicon.ico" rel="shortcut icon">
-    <link rel='stylesheet' href='/stylesheets/style.css'/>
-    <script src="/javascripts/jquery-3.3.1.min.js"></script>
+    <link rel='stylesheet' href='/stylesheets/bootstrap.min.css'/>
+
+    <script src="/javascripts/jquery-3.3.1.slim.min.js"></script>
+    <script src="/javascripts/popper.min.js"></script>
+    <script src="/javascripts/bootstrap.min.js"></script>
     <script src="/javascripts/jsencrypt.min.js"></script>
     <script src="/javascripts/index.js"></script>
+    <style>
+        html,
+        body {
+            height: 100%;
+        }
+
+        body {
+            display: -ms-flexbox;
+            display: flex;
+            -ms-flex-align: center;
+            align-items: center;
+            padding-top: 40px;
+            padding-bottom: 40px;
+            /*background-color: #f5f5f5;*/
+        }
+        .form {
+            width: 100%;
+            max-width: 530px;
+            padding: 15px;
+            margin: auto;
+        }
+        .form img {
+            margin-bottom: 25px;
+        }
+        /*.form .form-control {*/
+            /*position: relative;*/
+            /*box-sizing: border-box;*/
+            /*height: auto;*/
+            /*padding: 10px;*/
+            /*font-size: 16px;*/
+        /*}*/
+    </style>
 </head>
-<body>
-    <div id="logo">
-        <a href="/">
-            <img src="/images/googlelogo_color_272x92dp.png">
-        </a>
-    </div>
-    <div id="search-input">
-        <input type="text" id="search-text" autofocus>
-    </div>
-    <div id="search-buttons">
-        <input type="button" id="search-button" value=" Google 搜索">
-        <input type="button" id="github-fork" value="Fork Me On GitHub">
-    </div>
+<body class="text-center">
+    <form class="form" method="post" action="/search">
+        <img src="/images/googlelogo_color_272x92dp.png">
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" id="input-search-text" aria-describedby="basic-addon2">
+            <div class="input-group-append">
+                <button class="btn btn-outline-secondary" type="button" id="btn-search">Go</button>
+            </div>
+        </div>
+    </form>
 </body>
 </html>

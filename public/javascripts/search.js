@@ -18,6 +18,7 @@ $(function () {
         }
 
         var encrypted = crypt.encrypt(keywords);
+        $('#input-encrypt').val(encrypted);
         window.location.href = '/search?id=' + encodeURIComponent(encrypted);
     });
 });
