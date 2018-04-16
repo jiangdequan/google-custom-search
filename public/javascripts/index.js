@@ -20,6 +20,7 @@ $(function () {
         var encrypted = crypt.encrypt(keywords);
         window.location.href = '/search?id=' + encodeURIComponent(encrypted);
     }
+
     $('#btn-search').click(function () {
         request();
     });

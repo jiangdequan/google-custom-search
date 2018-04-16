@@ -9,28 +9,37 @@
     <link href="/images/favicon.ico" rel="shortcut icon">
     <link rel='stylesheet' href='/stylesheets/bootstrap.min.css'/>
 
-    <script src="/javascripts/jquery-3.3.1.slim.min.js"></script>
+    <script src="/javascripts/jquery-3.3.1.min.js"></script>
     <script src="/javascripts/popper.min.js"></script>
     <script src="/javascripts/bootstrap.min.js"></script>
     <script src="/javascripts/jsencrypt.min.js"></script>
     <script src="/javascripts/search.js"></script>
     <style>
+        h6 {
+            margin-bottom: 0.05rem;
+            margin-top: 0.4rem;
+            font-size: 1.1rem;
+        }
+        h6 a {
+            color: #1a0dab;
+        }
+        h6 a:visited {
+            color: #609;
+        }
+
         .p-result-desc b {
             color: red;
             font-weight: normal;
         }
         .p-result-desc {
-            font-size: 14px;
+            font-size: 13px;
+            color: #5a6268;
         }
         .active a {
             cursor: default;
         }
         .small-link {
             color: green;
-        }
-        h6 {
-            margin-bottom: 0.05rem;
-            margin-top: 0.2rem;
         }
     </style>
 </head>
@@ -45,96 +54,14 @@
 
         <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
             <form class="form-inline my-2 my-lg-0 input-group" style="max-width: 600px;">
-                <input type="text" class="form-control" id="input-search-text">
+                <input type="text" class="form-control" id="input-search-text" autofocus>
                 <div class="input-group-append">
                     <button class="btn btn-outline-secondary" type="button" id="btn-search">Go</button>
                 </div>
             </form>
         </div>
     </nav>
-    <div class="container">
-        <p style="color: grey">
-            <small>
-                找到约 <%- result.searchInformation.formattedTotalResults %> 条结果
-                (用时<%- result.searchInformation.formattedSearchTime %>秒)
-            </small>
-        </p>
-        <% for (var i = 0, l = result.items.length; i < l; i++) { %>
-        <div class="row">
-            <div class="col-md-7">
-                <h6>
-                    <a href="<%- result.items[i].link %>" target="_blank">
-                        <%- result.items[i].title %>
-                    </a>
-                </h6>
-                <small class="small-link">
-                    <% if (result.items[i].formattedUrl.length > 80) {%>
-                        <%- result.items[i].formattedUrl.substring(0, 80) + '...' %>
-                    <% } else { %>
-                        <%- result.items[i].formattedUrl %>
-                    <% } %>
-                </small>
-                <p class="p-result-desc">
-                    <%- result.items[i].htmlSnippet %>
-                </p>
-            </div>
-        </div>
-        <% } %>
 
-        <% if (result.paging.showPagingBar) { %>
-            <nav aria-label="Page navigation example">
-                <ul class="pagination">
-                    <% if (result.paging.showPrevPage) { %>
-                        <li class="page-item">
-                            <a class="page-link" href="/search?id=<%- encodeURIComponent(result.id) %>&start=<%- (result.paging.currentPageIndex - 2) * 10 + 1 %>" aria-label="Previous">
-                                <span aria-hidden="true">&laquo;</span>
-                                <span class="sr-only">Previous</span>
-                            </a>
-                        </li>
-                    <% } else { %>
-                        <li class="page-item disabled">
-                            <a class="page-link" href="#" aria-label="Previous">
-                                <span aria-hidden="true">&laquo;</span>
-                                <span class="sr-only">Previous</span>
-                            </a>
-                        </li>
-                    <% } %>
-
-
-                    <% for (var i = 0, l = result.paging.pages.length; i < l; i++) { %>
-                        <% if (result.paging.pages[i].label == result.paging.currentPageIndex) { %>
-                            <li class="page-item active">
-                                <a class="page-link" href="#" onclick="return false">
-                                    <%- result.paging.pages[i].label %>
-                                </a>
-                            </li>
-                        <% } else { %>
-                            <li class="page-item">
-                                <a class="page-link" href="/search?id=<%- encodeURIComponent(result.id) %>&start=<%- result.paging.pages[i].start %>">
-                                    <%- result.paging.pages[i].label %>
-                                </a>
-                            </li>
-                        <% } %>
-                    <% } %>
-
-                    <% if (result.paging.showNextPage) { %>
-                        <li class="page-item">
-                            <a class="page-link" href="/search?id=<%- encodeURIComponent(result.id) %>&start=<%- result.paging.currentPageIndex * 10 + 1 %>" aria-label="Next">
-                                <span aria-hidden="true">&raquo;</span>
-                                <span class="sr-only">Next</span>
-                            </a>
-                        </li>
-                    <% } else { %>
-                        <li class="page-item disabled">
-                            <a class="page-link" href="#" aria-label="Next">
-                                <span aria-hidden="true">&raquo;</span>
-                                <span class="sr-only">Next</span>
-                            </a>
-                        </li>
-                    <% } %>
-                </ul>
-            </nav>
-        <% } %>
-    </div>
+    <input type="hidden" value="<%- test %>" id="q">
 </body>
 </html>
