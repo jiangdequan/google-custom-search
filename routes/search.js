@@ -36,36 +36,26 @@ router.get('/', function (req, res, next) {
     var url = fixedUrl + encodeURIComponent(uncrypt) + '&start=' + start;
     Logger.debug(url, __filename);
 
-    // 测试
-    var body = FileUtils.loadFile(__dirname + '/../test/test3.json');
-    var para = JSON.parse(body);
-    var paging = Paging.paging(para.searchInformation.totalResults, config.num, currentPageIndex);
-    var result = para;
-    result.paging = paging;
-    result.id = req.query.id;
-    var test = Util.filterResult(result);
-    res.render('search', {title: ' - Google 搜索', result: result, test: test});
-    // 测试
-
-//     request(url, function (err, response, body) {
-//         if (!err && response.statusCode == 200) {
-//             var searchResult = JSON.parse(body);
-//             if (searchResult.error) {
-//                 Logger.error(searchResult, __filename);
-//                 res.render('index', {title: 'Google'});
-//             } else {
-//                 var paging = Paging.paging(searchResult.searchInformation.totalResults, config.num, currentPageIndex);
-//                 var result = searchResult;
-//                 result.paging = paging;
-//                 result.id = req.query.id;
-//                 res.render('search', {title: uncrypt + ' - Google 搜索', result: result});
-//             }
-//         } else {
-//             Logger.error('error occured when invoke api!', __filename)
-//             Logger.error(err, __filename);
-//             res.render('index', {title: 'Google'});
-//         }
-//     });
+     request(url, function (err, response, body) {
+         if (!err && response.statusCode == 200) {
+             var searchResult = JSON.parse(body);
+             if (searchResult.error) {
+                 Logger.error(searchResult, __filename);
+                 res.render('index', {title: 'Google'});
+             } else {
+                 var paging = Paging.paging(searchResult.searchInformation.totalResults, config.num, currentPageIndex);
+                 var result = searchResult;
+                 result.paging = paging;
+                 result.id = req.query.id;
+                 var test = Util.filterResult(result);
+                 res.render('search', {title: uncrypt + ' - Google 搜索', test: test});
+             }
+         } else {
+             Logger.error('error occured when invoke api!', __filename)
+             Logger.error(err, __filename);
+             res.render('index', {title: 'Google'});
+         }
+     });
 });
 
 module.exports = router;
