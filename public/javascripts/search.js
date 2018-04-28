@@ -10,7 +10,7 @@ $(function () {
     var crypt = new JSEncrypt();
     crypt.setPublicKey(public_key);
 
-    $('#btn-search').click(function () {
+    function request() {
         var keywords = $('#input-search-text').val();
 
         if (keywords === '' || keywords === undefined || keywords === null) {
@@ -18,14 +18,30 @@ $(function () {
         }
 
         var encrypted = crypt.encrypt(keywords);
-        $('#input-encrypt').val(encrypted);
         window.location.href = '/search?id=' + encodeURIComponent(encrypted);
+    }
+    $('#btn-search').click(function () {
+        request();
+    });
+
+    $("#input-search-text").bind("keydown", function (e) {
+        var theEvent = e || window.event;
+        var code = theEvent.keyCode || theEvent.which || theEvent.charCode;
+        if (code == 13) {
+            // 回车执行查询
+            request();
+            return false;
+        }
     });
     loadItems();
 });
 
 function loadItems() {
-    var result = decrypto($("#q").val(), 123, 25);
+    var q = $("#q").val();
+    if (undefined === q || '' === q || null === q) {
+        return;
+    }
+    var result = decrypto(q, 123, 25);
     var resultJson = JSON.parse(result);
     var html = "<div class=\"container\"><p style=\"color: grey\"><small>找到约 ";
     html += resultJson.searchInformation.formattedTotalResults + " 条结果(用时";

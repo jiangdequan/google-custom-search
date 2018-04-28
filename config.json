@@ -3,7 +3,8 @@
     "start": 1,
     "num": 10,
     "client": "google-csbe",
-    "key": "",
-    "cx": "",
-    "private_key": ""
+    "key": "your google search api key",
+    "cx": "your google custome search engine id",
+    "private_key": "rsa private key",
+    "dev_mode": false
 }

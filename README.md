@@ -17,7 +17,7 @@
 
 ### configuration
 + config cx/key/private_key in config.json or config environment variables, such as KEY/CX/PRIVATE_KEY
-+ change your public_key in public/javascripts/index.js
++ change your public_key in public/javascripts/search.js
 
 ### run
 PS: Your vps or platform must be able to visit Google

@@ -36,16 +36,18 @@ router.get('/', function (req, res, next) {
     var url = fixedUrl + encodeURIComponent(uncrypt) + '&start=' + start;
     Logger.debug(url, __filename);
 
-    // 测试
-    // var body = FileUtils.loadFile(__dirname + '/../test/test3.json');
-    // var para = JSON.parse(body);
-    // var paging = Paging.paging(para.searchInformation.totalResults, config.num, currentPageIndex);
-    // var result = para;
-    // result.paging = paging;
-    // result.id = req.query.id;
-    // var test = Util.filterResult(result);
-    // res.render('search', {title: ' - Google 搜索', result: result, test: test});
-    // 测试
+    // 开发模式,用于页面调试等
+    if (config.dev_mode) {
+        var body = FileUtils.loadFile(__dirname + '/../test/test3.json');
+        var para = JSON.parse(body);
+        var paging = Paging.paging(para.searchInformation.totalResults, config.num, currentPageIndex);
+        var result = para;
+        result.paging = paging;
+        result.id = req.query.id;
+        var test = Util.filterResult(result);
+        res.render('search', {title: ' - Google 搜索', result: test});
+        return;
+    }
 
     request(url, function (err, response, body) {
         if (!err && response.statusCode == 200) {
