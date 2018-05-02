@@ -1,25 +1,4 @@
 $(function () {
-
-    var public_key = "-----BEGIN PUBLIC KEY-----\n" +
-        "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC2s1jNEI45HuQGdIaNlrxi+GQp\n" +
-        "rZrzVEtxWD1Nq3s4899qkJIiFQr+MYRwCfRWvYn/xLRt/i1UqbtUvjkYOkyqFHu1\n" +
-        "svxZMAbGIUQqdFDkAIQcVYt5Ux2aUH/DJvBRsIF68TO7XTvImi6flJtle92rIsev\n" +
-        "qH+4kv82Txfa68nWnQIDAQAB\n" +
-        "-----END PUBLIC KEY-----";
-
-    var crypt = new JSEncrypt();
-    crypt.setPublicKey(public_key);
-
-    function request() {
-        var keywords = $('#input-search-text').val();
-
-        if (keywords === '' || keywords === undefined || keywords === null) {
-            return;
-        }
-
-        var encrypted = crypt.encrypt(keywords);
-        window.location.href = '/search?id=' + encodeURIComponent(encrypted);
-    }
     $('#btn-search').click(function () {
         request();
     });
@@ -36,13 +15,57 @@ $(function () {
     loadItems();
 });
 
+/**
+ * 发起搜索请求.
+ */
+function request() {
+    // 公钥
+    var public_key = "-----BEGIN PUBLIC KEY-----\n" +
+        "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC2s1jNEI45HuQGdIaNlrxi+GQp\n" +
+        "rZrzVEtxWD1Nq3s4899qkJIiFQr+MYRwCfRWvYn/xLRt/i1UqbtUvjkYOkyqFHu1\n" +
+        "svxZMAbGIUQqdFDkAIQcVYt5Ux2aUH/DJvBRsIF68TO7XTvImi6flJtle92rIsev\n" +
+        "qH+4kv82Txfa68nWnQIDAQAB\n" +
+        "-----END PUBLIC KEY-----";
+
+    var crypt = new JSEncrypt();
+    crypt.setPublicKey(public_key);
+
+    // 获取搜索内容
+    var keywords = $('#input-search-text').val();
+
+    // 搜索内容为空
+    if (keywords === '' || keywords === undefined || keywords === null) {
+        return;
+    }
+
+    // 加密搜索内容
+    var encrypted = crypt.encrypt(keywords);
+
+    // 修改地址栏地址,发起get请求
+    window.location.href = '/search?id=' + encodeURIComponent(encrypted);
+}
+
+/**
+ * 加载搜索结果.
+ */
 function loadItems() {
+    // 获取搜索的结果
     var q = $("#q").val();
+    // 搜索结果为空
     if (undefined === q || '' === q || null === q) {
         return;
     }
+    // 解密搜索结果
     var result = decrypto(q, 123, 25);
+    // 解析为JSON数据
     var resultJson = JSON.parse(result);
+
+    // 页面标题
+    window.document.title = resultJson.queries.request[0].searchTerms + window.document.title;
+    // 搜索内容写入搜索框
+    $("#input-search-text").val(resultJson.queries.request[0].searchTerms);
+
+    // 拼接搜索结果
     var html = "<div class=\"container\"><p style=\"color: grey\"><small>找到约 ";
     html += resultJson.searchInformation.formattedTotalResults + " 条结果(用时";
     html += resultJson.searchInformation.formattedSearchTime + "秒)</small></p>";
@@ -82,8 +105,7 @@ function loadItems() {
     } else {
         html += "<li class=\"page-item disabled\"><a class=\"page-link\" href=\"#\" aria-label=\"Next\"><span aria-hidden=\"true\">&raquo;</span><span class=\"sr-only\">Next</span></a></li>";
     }
-    window.document.title = resultJson.queries.request[0].searchTerms + window.document.title;
-    $("#input-search-text").val(resultJson.queries.request[0].searchTerms);
+
     $("nav").after($(html));
 }
 
