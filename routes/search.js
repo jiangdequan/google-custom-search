@@ -62,7 +62,7 @@ router.get('/', function (req, res, next) {
                 result.id = req.query.id;
 
                 var test = Util.filterResult(result);
-                res.render('search', {title: uncrypt + ' - Google 搜索', result: test});
+                res.render('search', {title: ' - Google 搜索', result: test});
             }
         } else {
             Logger.error('error occured when invoke api!', __filename)
