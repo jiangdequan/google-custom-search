@@ -61,7 +61,7 @@ function loadItems() {
     var resultJson = JSON.parse(result);
 
     // 页面标题
-    window.document.title = resultJson.queries.request[0].searchTerms + window.document.title;
+    window.document.title = resultJson.queries.request[0].searchTerms + ' ' + window.document.title;
     // 搜索内容写入搜索框
     $("#input-search-text").val(resultJson.queries.request[0].searchTerms);
 
